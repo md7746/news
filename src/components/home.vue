@@ -21,145 +21,39 @@
         <mt-tab-container class="news-list-wrap" v-model="active">
           <mt-tab-container-item id="new-item-con1">
             <div class="scroll-wrap" ref="scroll-wrap0">
-              <div>
-                <section class="news-list">
-                  <h2>标题</h2>
+              <mt-loadmore :top-method="loadTop" @top-status-change="handleTopChange" :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" ref="loadmore">
+                <section class="news-list" v-for='newsItem in news'>
+                  <h2>{{newsItem.title}}</h2>
                   <div>
-                    <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=534395539,304036971&fm=27&gp=0.jpg">
-                    <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=534395539,304036971&fm=27&gp=0.jpg">
-                    <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=534395539,304036971&fm=27&gp=0.jpg" class="no-mr">
+                    <span v-for='(imgItem,index) in newsItem.picInfo' :class="{'no-mr':index==2}">
+                      <img :src='imgItem.url'>
+                    </span>
                   </div>
-                  <p><span>新闻来源</span>
-                  <span>评数</span>
-                  <span>日期</span></p>
+                  <p><span>{{newsItem.source}}</span>
+                  <span>{{newsItem.tcount}}</span>
+                  <span>{{newsItem.ptime}}</span></p>
                 </section>
-                <section class="news-list">
-                  <h2>标题</h2>
-                  <div>
-                    <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=534395539,304036971&fm=27&gp=0.jpg">
-                    <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=534395539,304036971&fm=27&gp=0.jpg">
-                    <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=534395539,304036971&fm=27&gp=0.jpg" class="no-mr">
-                  </div>
-                  <p><span>新闻来源</span>
-                  <span>评数</span>
-                  <span>日期</span></p>
-                </section>
-                <section class="news-list">
-                  <h2>标题</h2>
-                  <div>
-                    <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=534395539,304036971&fm=27&gp=0.jpg">
-                    <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=534395539,304036971&fm=27&gp=0.jpg">
-                    <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=534395539,304036971&fm=27&gp=0.jpg" class="no-mr">
-                  </div>
-                  <p><span>新闻来源</span>
-                  <span>评数</span>
-                  <span>日期</span></p>
-                </section>
-                <section class="news-list">
-                  <h2>标题</h2>
-                  <div>
-                    <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=534395539,304036971&fm=27&gp=0.jpg">
-                    <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=534395539,304036971&fm=27&gp=0.jpg">
-                    <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=534395539,304036971&fm=27&gp=0.jpg" class="no-mr">
-                  </div>
-                  <p><span>新闻来源</span>
-                  <span>评数</span>
-                  <span>日期</span></p>
-                </section>
-                <section class="news-list">
-                  <h2>标题</h2>
-                  <div>
-                    <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=534395539,304036971&fm=27&gp=0.jpg">
-                    <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=534395539,304036971&fm=27&gp=0.jpg">
-                    <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=534395539,304036971&fm=27&gp=0.jpg" class="no-mr">
-                  </div>
-                  <p><span>新闻来源</span>
-                  <span>评数</span>
-                  <span>日期</span></p>
-                </section>
-                <section class="news-list">
-                  <h2>标题</h2>
-                  <div>
-                    <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=534395539,304036971&fm=27&gp=0.jpg">
-                    <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=534395539,304036971&fm=27&gp=0.jpg">
-                    <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=534395539,304036971&fm=27&gp=0.jpg" class="no-mr">
-                  </div>
-                  <p><span>新闻来源</span>
-                  <span>评数</span>
-                  <span>日期</span></p>
-                </section>
-              </div>
+
+                <div slot="top" class="mint-loadmore-top">
+                  <span v-show="topStatus !== 'loading'" :class="{ 'is-rotate': topStatus === 'drop' }">↓</span>
+                  <span v-show="topStatus === 'loading'">
+                    <mt-spinner type="snake"></mt-spinner>
+                  </span>
+                </div>    
+
+                <div slot="bottom" class="mint-loadmore-bottom">
+                  <span v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }">↑</span>
+                  <span v-show="bottomStatus === 'loading'">
+                    <mt-spinner type="snake"></mt-spinner>
+                  </span>
+                </div>
+              </mt-loadmore>
             </div>
           </mt-tab-container-item>
           <mt-tab-container-item id="new-item-con2">
             <div class="scroll-wrap" ref="scroll-wrap1">
               <div>
-                <section class="news-list">
-                  <h2>标题</h2>
-                  <div>
-                    <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=534395539,304036971&fm=27&gp=0.jpg">
-                    <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=534395539,304036971&fm=27&gp=0.jpg">
-                    <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=534395539,304036971&fm=27&gp=0.jpg" class="no-mr">
-                  </div>
-                  <p><span>新闻来源</span>
-                  <span>评数</span>
-                  <span>日期</span></p>
-                </section>
-                <section class="news-list">
-                  <h2>标题</h2>
-                  <div>
-                    <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=534395539,304036971&fm=27&gp=0.jpg">
-                    <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=534395539,304036971&fm=27&gp=0.jpg">
-                    <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=534395539,304036971&fm=27&gp=0.jpg" class="no-mr">
-                  </div>
-                  <p><span>新闻来源</span>
-                  <span>评数</span>
-                  <span>日期</span></p>
-                </section>
-                <section class="news-list">
-                  <h2>标题</h2>
-                  <div>
-                    <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=534395539,304036971&fm=27&gp=0.jpg">
-                    <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=534395539,304036971&fm=27&gp=0.jpg">
-                    <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=534395539,304036971&fm=27&gp=0.jpg" class="no-mr">
-                  </div>
-                  <p><span>新闻来源</span>
-                  <span>评数</span>
-                  <span>日期</span></p>
-                </section>
-                <section class="news-list">
-                  <h2>标题</h2>
-                  <div>
-                    <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=534395539,304036971&fm=27&gp=0.jpg">
-                    <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=534395539,304036971&fm=27&gp=0.jpg">
-                    <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=534395539,304036971&fm=27&gp=0.jpg" class="no-mr">
-                  </div>
-                  <p><span>新闻来源</span>
-                  <span>评数</span>
-                  <span>日期</span></p>
-                </section>
-                <section class="news-list">
-                  <h2>标题</h2>
-                  <div>
-                    <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=534395539,304036971&fm=27&gp=0.jpg">
-                    <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=534395539,304036971&fm=27&gp=0.jpg">
-                    <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=534395539,304036971&fm=27&gp=0.jpg" class="no-mr">
-                  </div>
-                  <p><span>新闻来源</span>
-                  <span>评数</span>
-                  <span>日期</span></p>
-                </section>
-                <section class="news-list">
-                  <h2>标题</h2>
-                  <div>
-                    <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=534395539,304036971&fm=27&gp=0.jpg">
-                    <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=534395539,304036971&fm=27&gp=0.jpg">
-                    <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=534395539,304036971&fm=27&gp=0.jpg" class="no-mr">
-                  </div>
-                  <p><span>新闻来源</span>
-                  <span>评数</span>
-                  <span>日期</span></p>
-                </section>
+
               </div>
             </div>
           </mt-tab-container-item>
@@ -178,33 +72,33 @@
         </mt-tab-container>
     </section>
     <footer>
-      <mt-tabbar v-model="selected">
-        <mt-tab-item id="外卖">
-          外卖
-        </mt-tab-item>
-        <mt-tab-item id="订单">
-          订单
-        </mt-tab-item>
-        <mt-tab-item id="发现">
-          发现
-        </mt-tab-item>
-        <mt-tab-item id="我的">
-          我的
-        </mt-tab-item>
-      </mt-tabbar>
+      <span><i class="fa fa-home"></i><br>首页</span>
+      <span><i class="fa fa-file-movie-o"></i><br>视频</span>
+      <span><i class="fa fa-plus-square-o"></i><br>关注</span>
+      <span><i class="fa fa-user-circle-o"></i><br>我的</span>
     </footer>
   </div>
 </template>
 
 <script>
   import {MTween,mScroll} from '@/assets/js/m.Tween.js'
+  import {http} from '@/axios'
   export default {
     name: 'Home',
     data: function() {
       return {
         active: 'new-item-con1',
         newItemSelected: 'new-item1',
-        selected: '外卖'
+        selected: '外卖',
+        news:[],
+        allLoaded: false,
+        bottomStatus: '',
+        topStatus: '',
+        //for the data
+        ti:2,
+        tj:10,
+        bi:5,
+        bj:40
       }
     },
     watch: {
@@ -232,7 +126,7 @@
         el: that.$refs['scroll-wrap0'],
         offBar: true,
         type: 'easeBothStrong'
-      })
+      });
     },
     methods: {
       getMove(i) {
@@ -253,14 +147,51 @@
           type: 'linear',
           time: 300,
           callBack: function() {
-            mScroll({//定义滚动条
-              el: that.$refs['scroll-wrap' + i],
-              offBar: true,
-              type: 'easeBothStrong'
-            })
             that.newItemSelected = 'new-item' + (i + 1)
           }
         })
+      },
+      handleBottomChange(status) {
+        this.bottomStatus = status;
+      },
+
+      loadBottom() {console.log('bot')
+        let that = this;
+        
+        if(that.bi<9){
+          that.bi++;
+          that.bj += 10;
+          http.get(that.bi+"-0-10-"+that.bj+".do").then((response) => {
+            if (response.data.code === 200) {
+              that.news = that.news.concat(response.data.list);
+              that.$refs.loadmore.onBottomLoaded();
+            }
+          }).catch((error) => {
+            console.log(error);
+          });
+        }else{
+          this.allLoaded = true;
+        }
+      },
+
+      handleTopChange(status) {
+        this.moveTranslate = 1;
+        this.topStatus = status;
+      },
+      loadTop() {console.log('top')
+        let that = this;
+        if(that.ti<5){
+          that.ti++;
+          that.tj += 10;
+          http.get(that.ti+"-0-10-"+that.tj+".do").then((response) => {
+            if (response.data.code === 200) {
+              that.news = response.data.list.concat(that.news);
+              that.$refs.loadmore.onTopLoaded();
+            }
+          }).catch((error) => {
+            console.log(error);
+          });
+        }
       }
     }
   }
@@ -291,7 +222,8 @@
       &{padding-bottom: 46/@r;border-bottom: 1px solid #e4e4e4;}
       h2{font-size: 32/@r;line-height: 42/@r;color: #3a3a3a;margin-top: 28/@r;}
       div{.flex();padding: 22/@r 0;}
-      div img{.grow();height: 145/@r;margin-right: 11/@r;}
+      div span{.grow();height: 145/@r;margin-right: 11/@r;display: block;}
+      div span img{height: 100%;width:221/@r;}
       .no-mr{margin-right: 0;}
       p{font-size: 24/@r;color: #989898;}
       p span{margin-right: 24/@r;}
@@ -301,7 +233,64 @@
   .scroll-wrap{height:500px;}
 
   footer{
-    &{z-index: 2;background: #fff;position: absolute;left:0;bottom: 0;right: 0;}
+    &{z-index: 2;background: #fff;position: absolute;left:0;bottom: 0;right: 0;.flex();padding: 14/@r 0;border-top: 1px solid #e4e4e4;}
+    span{.grow();text-align: center;font-size: 20/@r;}
+    span i{font-size: 40/@r;margin-bottom: 12/@r;}
+  }
+  //上下拉加载
+  .loading-background, .mint-loadmore-top span {
+      -webkit-transition: .2s linear;
+      transition: .2s linear
+  }
+  .mint-loadmore-top span {
+      display: inline-block;
+      vertical-align: middle
   }
 
+  .mint-loadmore-top span.is-rotate {
+      -webkit-transform: rotate(180deg);
+      transform: rotate(180deg)
+  }
+
+  .page-loadmore .mint-spinner {
+      display: inline-block;
+      vertical-align: middle
+  }
+
+  .page-loadmore-desc {
+      text-align: center;
+      color: #666;
+      padding-bottom: 5px
+  }
+
+  .page-loadmore-desc:last-of-type,
+  .page-loadmore-listitem {
+      border-bottom: 1px solid #eee
+  }
+
+  .page-loadmore-listitem {
+      height: 50px;
+      line-height: 50px;
+      text-align: center
+  }
+
+  .page-loadmore-listitem:first-child {
+      border-top: 1px solid #eee
+  }
+
+  .page-loadmore-wrapper {
+      
+  }
+
+  .mint-loadmore-bottom span {
+      display: inline-block;
+      -webkit-transition: .2s linear;
+      transition: .2s linear;
+      vertical-align: middle
+  }
+
+  .mint-loadmore-bottom span.is-rotate {
+      -webkit-transform: rotate(180deg);
+      transform: rotate(180deg)
+  }
 </style>

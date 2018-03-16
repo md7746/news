@@ -1,13 +1,9 @@
 <template>
   <div class="page-loadmore">
     <p class="page-loadmore-desc">在列表底部, 按住 - 上拉 - 释放可以获取更多数据</p>
-    <p class="page-loadmore-desc">translate : {{ translate }}</p>
-    <div class="loading-background" :style="{ transform: 'scale3d(' + moveTranslate + ',' + moveTranslate + ',1)' }">
-      translateScale : {{ moveTranslate }} 
-    </div>
 
     <div class="page-loadmore-wrapper" ref="wrapper" :style="{ height: wrapperHeight + 'px' }">
-      <mt-loadmore :top-method="loadTop" @translate-change="translateChange" @top-status-change="handleTopChange"       :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" ref="loadmore">
+      <mt-loadmore :top-method="loadTop" @top-status-change="handleTopChange"       :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" ref="loadmore">
         
         <ul class="page-loadmore-list">
           <li v-for="item in list" class="page-loadmore-listitem">{{ item }}</li>
@@ -104,19 +100,10 @@
         list: [],
         allLoaded: false,
 
-
         bottomStatus: '',
         wrapperHeight: 0,
 
-
-
-        topStatus: '',
-        //wrapperHeight: 0,
-        translate: 0,
-        moveTranslate: 0
-
-
-
+        topStatus: ''
       };
     },
 
@@ -144,12 +131,6 @@
         this.moveTranslate = 1;
         this.topStatus = status;
       },
-      translateChange(translate) {
-      	console.log(translate);
-        const translateNum = +translate;
-        this.translate = translateNum.toFixed(2);
-        this.moveTranslate = (1 + translateNum / 70).toFixed(2);
-      },
       loadTop() {
         setTimeout(() => {
           let firstValue = this.list[0];
@@ -165,7 +146,7 @@
       	mScroll({//定义滚动条
               el: that.$refs.wrapper,
               offBar: true,
-              type: 'linear'
+              type: 'easeBothStrong'
             })
       }
     
