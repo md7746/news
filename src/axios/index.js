@@ -7,7 +7,7 @@ Vue.use(VueAxios,Axios)
 
 let http = Axios.create({
     baseURL:'https://easy-mock.com/mock/59884e79a1d30433d85858cb/works/',
-    timeout: 1000,
+    timeout: 5000,
     responseType:'json',
     params:{
       book:"123"

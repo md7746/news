@@ -20,8 +20,8 @@
       
         <mt-tab-container class="news-list-wrap" v-model="active">
           <mt-tab-container-item id="new-item-con1">
-            <div class="scroll-wrap" ref="scroll-wrap0">
-              <mt-loadmore :top-method="loadTop" @top-status-change="handleTopChange" :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" ref="loadmore">
+            <div class="scroll-wrap" ref="listWrap" :style="{ height: listWrapHeight + 'px' }">
+              <mt-loadmore :top-method="loadTop" @top-status-change="handleTopChange" :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" topDistance='45' bottomDistance='45' ref="loadmore">
                 <section class="news-list" v-for='newsItem in news'>
                   <h2>{{newsItem.title}}</h2>
                   <div>
@@ -34,7 +34,7 @@
                   <span>{{newsItem.ptime}}</span></p>
                 </section>
 
-                <div slot="top" class="mint-loadmore-top">
+                <div slot="top" class="mint-loadmore-top" v-show="tstatu" :class="{'is-top':!this.tstatu}">
                   <span v-show="topStatus !== 'loading'" :class="{ 'is-rotate': topStatus === 'drop' }">↓</span>
                   <span v-show="topStatus === 'loading'">
                     <mt-spinner type="snake"></mt-spinner>
@@ -71,7 +71,7 @@
           </mt-tab-container-item>
         </mt-tab-container>
     </section>
-    <footer>
+    <footer ref="footer">
       <span><i class="fa fa-home"></i><br>首页</span>
       <span><i class="fa fa-file-movie-o"></i><br>视频</span>
       <span><i class="fa fa-plus-square-o"></i><br>关注</span>
@@ -81,7 +81,7 @@
 </template>
 
 <script>
-  import {MTween,mScroll} from '@/assets/js/m.Tween.js'
+  import {MTween,mScroll,css} from '@/assets/js/m.Tween.js'
   import {http} from '@/axios'
   export default {
     name: 'Home',
@@ -94,6 +94,8 @@
         allLoaded: false,
         bottomStatus: '',
         topStatus: '',
+        listWrapHeight:0,
+        tstatu:true,
         //for the data
         ti:2,
         tj:10,
@@ -123,10 +125,11 @@
     mounted() {
       let that = this;
       mScroll({ //定义滚动条
-        el: that.$refs['scroll-wrap0'],
+        el: that.$refs['listWrap'],
         offBar: true,
-        type: 'easeBothStrong'
+        type: 'linear'
       });
+      this.listWrapHeight = this.$refs.footer.getBoundingClientRect().top - this.$refs.listWrap.getBoundingClientRect().top;
     },
     methods: {
       getMove(i) {
@@ -155,9 +158,8 @@
         this.bottomStatus = status;
       },
 
-      loadBottom() {console.log('bot')
+      loadBottom() {
         let that = this;
-        
         if(that.bi<9){
           that.bi++;
           that.bj += 10;
@@ -175,10 +177,9 @@
       },
 
       handleTopChange(status) {
-        this.moveTranslate = 1;
         this.topStatus = status;
       },
-      loadTop() {console.log('top')
+      loadTop() {
         let that = this;
         if(that.ti<5){
           that.ti++;
@@ -191,6 +192,16 @@
           }).catch((error) => {
             console.log(error);
           });
+        }else{
+          that.tstatu=false;
+          MTween({
+            el: that.$refs.listWrap.querySelector(".mint-loadmore-content"),
+            target: {
+              translateY: 0
+            },
+            type: 'linear',
+            time: 300
+          })
         }
       }
     }
@@ -230,7 +241,7 @@
     }
   }
 
-  .scroll-wrap{height:500px;}
+  .scroll-wrap{height:100%;}
 
   footer{
     &{z-index: 2;background: #fff;position: absolute;left:0;bottom: 0;right: 0;.flex();padding: 14/@r 0;border-top: 1px solid #e4e4e4;}
@@ -293,4 +304,5 @@
       -webkit-transform: rotate(180deg);
       transform: rotate(180deg)
   }
+  .is-top{transform: translate3d(0px, 0px, 0px);-webkit-transform: translate3d(0px, 0px, 0px);}
 </style>

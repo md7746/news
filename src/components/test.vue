@@ -109,10 +109,12 @@
 
     methods: {
       handleBottomChange(status) {
+        console.log(status)
         this.bottomStatus = status;
       },
 
       loadBottom() {
+        console.log(1)
         setTimeout(() => {
           let lastValue = this.list[this.list.length - 1];
           if (lastValue < 40) {
@@ -123,12 +125,12 @@
             this.allLoaded = true;
           }
           this.$refs.loadmore.onBottomLoaded();
-        }, 1500);
+        }, 10);
         this.croll();
       },
 
       handleTopChange(status) {
-        this.moveTranslate = 1;
+
         this.topStatus = status;
       },
       loadTop() {
