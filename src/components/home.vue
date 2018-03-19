@@ -18,44 +18,42 @@
         <span class="blue-line" ref='bline'></span>
       </header>
       
-        <mt-tab-container class="news-list-wrap" v-model="active">
+        <mt-tab-container class="news-list-wrap" v-model="active" swipeable>
           <mt-tab-container-item id="new-item-con1">
-            <div class="scroll-wrap" ref="listWrap" :style="{ height: listWrapHeight + 'px' }">
-              <mt-loadmore :top-method="loadTop" @top-status-change="handleTopChange" :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" topDistance='45' bottomDistance='45' ref="loadmore">
-                <section class="news-list" v-for='newsItem in news'>
-                  <h2>{{newsItem.title}}</h2>
-                  <div>
-                    <span v-for='(imgItem,index) in newsItem.picInfo' :class="{'no-mr':index==2}">
-                      <img :src='imgItem.url'>
+            <happy-scroll resize>
+              <div class="scroll-wrap" ref="listWrap" :style="{ height: listWrapHeight + 'px' }">
+                <mt-loadmore :top-method="loadTop" @top-status-change="handleTopChange" :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" :topDistance=tdis :bottomDistance=bdis ref="loadmore">
+                  <section class="news-list" v-for='newsItem in news'>
+                    <h2>{{newsItem.title}}</h2>
+                    <div>
+                      <span v-for='(imgItem,index) in newsItem.picInfo' :class="{'no-mr':index==2}">
+                        <img :src='imgItem.url'>
+                      </span>
+                    </div>
+                    <p><span>{{newsItem.source}}</span>
+                    <span>{{newsItem.tcount}}</span>
+                    <span>{{newsItem.ptime}}</span></p>
+                  </section>
+
+                  <div slot="top" class="mint-loadmore-top" v-show="tstatu" :class="{'is-top':!this.tstatu}">
+                    <span v-show="topStatus !== 'loading'" :class="{ 'is-rotate': topStatus === 'drop' }">↓</span>
+                    <span v-show="topStatus === 'loading'">
+                      <mt-spinner type="snake"></mt-spinner>
+                    </span>
+                  </div>    
+
+                  <div slot="bottom" class="mint-loadmore-bottom">
+                    <span v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }">↑</span>
+                    <span v-show="bottomStatus === 'loading'">
+                      <mt-spinner type="snake"></mt-spinner>
                     </span>
                   </div>
-                  <p><span>{{newsItem.source}}</span>
-                  <span>{{newsItem.tcount}}</span>
-                  <span>{{newsItem.ptime}}</span></p>
-                </section>
-
-                <div slot="top" class="mint-loadmore-top" v-show="tstatu" :class="{'is-top':!this.tstatu}">
-                  <span v-show="topStatus !== 'loading'" :class="{ 'is-rotate': topStatus === 'drop' }">↓</span>
-                  <span v-show="topStatus === 'loading'">
-                    <mt-spinner type="snake"></mt-spinner>
-                  </span>
-                </div>    
-
-                <div slot="bottom" class="mint-loadmore-bottom">
-                  <span v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }">↑</span>
-                  <span v-show="bottomStatus === 'loading'">
-                    <mt-spinner type="snake"></mt-spinner>
-                  </span>
-                </div>
-              </mt-loadmore>
-            </div>
+                </mt-loadmore>
+              </div>
+            </happy-scroll>
           </mt-tab-container-item>
           <mt-tab-container-item id="new-item-con2">
-            <div class="scroll-wrap" ref="scroll-wrap1">
-              <div>
-
-              </div>
-            </div>
+            2
           </mt-tab-container-item>
           <mt-tab-container-item id="new-item-con3">
             3
@@ -81,7 +79,7 @@
 </template>
 
 <script>
-  import {MTween,mScroll,css} from '@/assets/js/m.Tween.js'
+  import {MTween,css} from '@/assets/js/m.Tween.js'
   import {http} from '@/axios'
   export default {
     name: 'Home',
@@ -96,6 +94,8 @@
         topStatus: '',
         listWrapHeight:0,
         tstatu:true,
+        tdis:50,
+        bdis:50,
         //for the data
         ti:2,
         tj:10,
@@ -122,13 +122,12 @@
         }
       }
     },
+    created(){
+      this.$nextTick(()=>{//dom渲染完后
+
+      })
+    },
     mounted() {
-      let that = this;
-      mScroll({ //定义滚动条
-        el: that.$refs['listWrap'],
-        offBar: true,
-        type: 'linear'
-      });
       this.listWrapHeight = this.$refs.footer.getBoundingClientRect().top - this.$refs.listWrap.getBoundingClientRect().top;
     },
     methods: {
@@ -228,7 +227,7 @@
   }
 
   .news-list-wrap{
-    &{padding: 0 34/@r;z-index: 1;}
+    &{z-index: 1;}
     .news-list{
       &{padding-bottom: 46/@r;border-bottom: 1px solid #e4e4e4;}
       h2{font-size: 32/@r;line-height: 42/@r;color: #3a3a3a;margin-top: 28/@r;}
@@ -241,7 +240,7 @@
     }
   }
 
-  .scroll-wrap{height:100%;}
+  .scroll-wrap{height:100%;padding: 0 34/@r;}
 
   footer{
     &{z-index: 2;background: #fff;position: absolute;left:0;bottom: 0;right: 0;.flex();padding: 14/@r 0;border-top: 1px solid #e4e4e4;}

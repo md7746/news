@@ -7,16 +7,20 @@ import router from './router'
 import 'font-awesome/css/font-awesome.css'
 import '@/assets/css/base.css'
 
+Vue.config.productionTip = false
+
 //----------- mint-ui --------
 import { TabContainer,TabContainerItem,Loadmore,Spinner } from 'mint-ui';
 //滑动内容
-Vue.component(TabContainer.name, TabContainer);
-Vue.component(TabContainerItem.name, TabContainerItem);
+Vue.component(TabContainer.name, TabContainer)
+Vue.component(TabContainerItem.name, TabContainerItem)
 //上下拉加载
-Vue.component(Loadmore.name, Loadmore);
-Vue.component(Spinner.name, Spinner);
+Vue.component(Loadmore.name, Loadmore)
+Vue.component(Spinner.name, Spinner)
 
-Vue.config.productionTip = false
+import HappyScroll from 'vue-happy-scroll'
+import 'vue-happy-scroll/docs/happy-scroll.css'
+Vue.use(HappyScroll)
 
 /* eslint-disable no-new */
 new Vue({
