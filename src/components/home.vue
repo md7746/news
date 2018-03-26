@@ -1,10 +1,10 @@
 <template>
   <div>
     <section class="search">
-      <div>
+      <router-link to="/search" tag="div">
         <i class="fa fa-search"></i>
         <input type="text" placeholder="搜索">
-      </div>
+      </router-link>
     </section>
     <section>
       <header class="new-items-wrap">
@@ -20,7 +20,7 @@
       </header>
       <mt-tab-container class="news-list-wrap" v-model="active" swipeable>
         <mt-tab-container-item id="new-item-con1">
-            <happy-scroll resize scroll-top="130" :style="{ height: listWrapHeight + 'px' }">
+            <happy-scroll resize :style="{ height: listWrapHeight + 'px' }">
               <div class="scroll-wrap" ref="listWrap">
                 <mt-loadmore :top-method="loadTop" @top-status-change="handleTopChange" :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" :topDistance=tdis :bottomDistance=bdis ref="loadmore">
                   <section class="news-list" v-for='newsItem in news'>
@@ -51,28 +51,34 @@
             </happy-scroll>
         </mt-tab-container-item>
         <mt-tab-container-item id="new-item-con2">
-          2
+          <div class="no-data" :style="{ height: listWrapHeight + 'px' }">
+            暂无数据！
+          </div>
         </mt-tab-container-item>
         <mt-tab-container-item id="new-item-con3">
-          3
+          <div class="no-data" :style="{ height: listWrapHeight + 'px' }">
+            暂无数据！！
+          </div>
         </mt-tab-container-item>
         <mt-tab-container-item id="new-item-con4">
-          4
+          <div class="no-data" :style="{ height: listWrapHeight + 'px' }">
+            暂无数据！！！
+          </div>
         </mt-tab-container-item>
         <mt-tab-container-item id="new-item-con5">
-          5
+          <div class="no-data" :style="{ height: listWrapHeight + 'px' }">
+            暂无数据！！！！
+          </div>
         </mt-tab-container-item>
         <mt-tab-container-item id="new-item-con6">
-          6
+          <div class="no-data" :style="{ height: listWrapHeight + 'px' }">
+            暂无数据！！！！！
+          </div>
         </mt-tab-container-item>
       </mt-tab-container>
     </section>
-    <footer ref="footer">
-      <span><i class="fa fa-home"></i><br>首页</span>
-      <span><i class="fa fa-file-movie-o"></i><br>视频</span>
-      <span><i class="fa fa-plus-square-o"></i><br>关注</span>
-      <span><i class="fa fa-user-circle-o"></i><br>我的</span>
-    </footer>
+    <div class="footer" ref="footer">
+    </div>
   </div>
 </template>
 <script>
@@ -80,20 +86,21 @@ import { MTween, css } from '@/assets/js/m.Tween.js'
 import { http } from '@/axios'
 export default {
   name: 'Home',
-  data: function() {
+  data() {
     return {
+      listWrapHeight: 0,
+      //tab
       active: 'new-item-con1',
       newItemSelected: 'new-item1',
-      selected: '外卖',
+      //load more
       news: [],
       allLoaded: false,
       bottomStatus: '',
       topStatus: '',
-      listWrapHeight: 0,
       tstatu: true,
       tdis: 50,
       bdis: 50,
-      //for the data
+      //for the mock data
       ti: 2,
       tj: 10,
       bi: 5,
@@ -317,27 +324,12 @@ export default {
   padding: 0 34/@r;
 }
 
-footer {
-  & {
-    z-index: 2;
-    background: #fff;
+.footer {
     position: absolute;
     left: 0;
     bottom: 0;
     right: 0;
-    .flex();
-    padding: 14/@r 0;
-    border-top: 1px solid #e4e4e4;
-  }
-  span {
-    .grow();
-    text-align: center;
-    font-size: 20/@r;
-  }
-  span i {
-    font-size: 40/@r;
-    margin-bottom: 12/@r;
-  }
+    height: 60/@r;width: 100%;
 } 
 
 //上下拉加载
@@ -372,18 +364,6 @@ footer {
 .page-loadmore-listitem {
   border-bottom: 1px solid #eee
 }
-
-.page-loadmore-listitem {
-  height: 50px;
-  line-height: 50px;
-  text-align: center
-}
-
-.page-loadmore-listitem:first-child {
-  border-top: 1px solid #eee
-}
-
-.page-loadmore-wrapper {}
 
 .mint-loadmore-bottom span {
   display: inline-block;
